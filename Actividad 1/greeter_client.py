@@ -40,6 +40,12 @@ def run():
             else:
                 if(destino != 0):
                     response2 = stub2.SendMensaje(helloworld_pb2.DataRequest(id = '1', destino = destino, mensaje = r_input))
+                    if(response2 == "Error1"):
+                        destino = 0
+                        print("Ingrese un destinatario diferente a ud. mismo")
+                    elif(response2 == "Error2"):
+                        destino = 0
+                        print("El destinatario no se encuentra conectado")
                 else:
                     print("Ingrese un destinatario valido")
 

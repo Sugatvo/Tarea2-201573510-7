@@ -20,10 +20,8 @@ class AllClients(helloworld_pb2_grpc.AllClientsServicer):
 class AllMessages(helloworld_pb2_grpc.AllMessagesServicer):
 
     def getMessages(self, request, context):
-        file = open("log.txt","r")
         for i in Mensajes_enviados[request.mensaje]:
             yield helloworld_pb2.DataReply(mensaje = i)
-        file.close()
 
 
 class Mensajeria(helloworld_pb2_grpc.AllClientsServicer):
@@ -51,8 +49,10 @@ class Mensajeria(helloworld_pb2_grpc.AllClientsServicer):
 
     def SendMensaje(self, request, context):
 
-        if(request.id == id_clientes[request.destino]):
-            return helloworld_pb2.DataReply(mensaje = 'Destino invalido')
+        if(request.destino not in id_clientes):
+            return helloworld_pb2.DataReply(mensaje = 'Error2')
+        elif(request.id == id_clientes[request.destino]):
+            return helloworld_pb2.DataReply(mensaje = 'Error1')
         else:
             now = datetime.now()
             localtime = now.strftime("%d/%m/%Y, %H:%M:%S")
@@ -65,16 +65,15 @@ class Mensajeria(helloworld_pb2_grpc.AllClientsServicer):
                     file.write("[" + localtime + "]["+ request.id + " -> " + id_clientes[request.destino] + "]: " + request.mensaje + "\n")
                     file.close()
                     self.flag_write = 0
-                break
+                    break
             return helloworld_pb2.DataReply(mensaje = 'Mensaje enviado')
 
     def Salir(self, request, context):
-        print("puto")
         for i, j in id_clientes.items():
             if(j == request.mensaje):
                 del id_clientes[i]
                 break
-        return helloworld_pb2.DataReply(mensaje = 'Salio de pana')
+        return helloworld_pb2.DataReply(mensaje = 'Bye')
 
 
 
