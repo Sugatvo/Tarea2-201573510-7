@@ -14,8 +14,7 @@ class AllClients(helloworld_pb2_grpc.AllClientsServicer):
 
     def getClients(self, request, context):
         for i, j in id_clientes.items():
-            if (j != request.mensaje):
-                yield helloworld_pb2.DataReply(mensaje = i + ": [Cliente " + j + "]")
+            yield helloworld_pb2.DataReply(mensaje = i + ": [Cliente " + j + "]")
 
 
 class AllMessages(helloworld_pb2_grpc.AllMessagesServicer):

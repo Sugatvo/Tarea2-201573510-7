@@ -40,9 +40,7 @@ def threaded(channel):
 
 
 def run():
-    #Conexion al servidor
-    print("Bienvenido cliente: " + getIP())
-    
+
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
@@ -57,6 +55,8 @@ def run():
     while(True):
         r_input = input("")
         if(r_input == "\\clientes" or r_input == "\\mensajes"):
+            #Conexion al servidor
+            print("Tu eres el cliente: " + getIP())
             channel.basic_publish(
                 exchange='intermediario', routing_key="server", body=r_input + "-" + getIP())
 

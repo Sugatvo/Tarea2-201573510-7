@@ -35,6 +35,7 @@ def run():
         while(True):
             r_input = input("")
             if(r_input == "\\clientes"):
+                print("Tu eres el cliente: " + getIP())
                 for response in stub.getClients(helloworld_pb2.DataReply(mensaje=getIP())):
                     print(response.mensaje)
             elif(r_input == "\\mensajes"):
