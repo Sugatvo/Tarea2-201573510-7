@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  rabbitmq:
+      image: "rabbitmq:3-management"
+      expose:
+        - "5672"
+
+  # Se crea el container del servidor
+  servidor:
+    build:
+      context: ./servidor
+      dockerfile: Dockerfile
+    image: servidor
+    expose:
+      - "5672"
+    volumes:
+      - ./servidor:/servidor
+    tty: true
+    stdin_open: true
+    depends_on:
+      - rabbitmq
+
+  # Se crea el container del cliente
+  cliente:
+    build:
+      context: ./cliente
+      dockerfile: Dockerfile
+    image: cliente
+    expose:
+      - "5672"
+    depends_on:
+      - servidor
+    volumes:
+      - ./cliente:/cliente
+    tty: true
+    stdin_open: true

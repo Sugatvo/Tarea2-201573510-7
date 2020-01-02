@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  # Se crea el container del servidor
+  servidor:
+    build:
+      context: ./servidor
+      dockerfile: Dockerfile
+    image: servidor
+    expose:
+      - "50051"
+    volumes:
+      - ./servidor:/servidor
+    tty: true
+    stdin_open: true
+
+  # Se crea el container del cliente
+  cliente:
+    build:
+      context: ./cliente
+      dockerfile: Dockerfile
+    image: cliente
+    expose:
+      - "50051"
+    depends_on:
+      - servidor
+    volumes:
+      - ./cliente:/cliente
+    tty: true
+    stdin_open: true

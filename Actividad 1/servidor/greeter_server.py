@@ -14,7 +14,8 @@ class AllClients(helloworld_pb2_grpc.AllClientsServicer):
 
     def getClients(self, request, context):
         for i, j in id_clientes.items():
-            yield helloworld_pb2.DataReply(mensaje = i + ": [Cliente " + j + "]")
+            if (j != request.mensaje):
+                yield helloworld_pb2.DataReply(mensaje = i + ": [Cliente " + j + "]")
 
 
 class AllMessages(helloworld_pb2_grpc.AllMessagesServicer):
@@ -38,14 +39,6 @@ class Mensajeria(helloworld_pb2_grpc.AllClientsServicer):
         while(True):
             if(len(clientes_activos[request.mensaje]) > 0):
                 yield helloworld_pb2.DataReply(mensaje = clientes_activos[request.mensaje].pop(0))
-
-
-    #    for i in clientes_activos:
-    #        yield helloworld_pb2.DataReply(mensaje = i)
-    #    while(True):
-    #        if():
-    #            yield helloworld_pb2.DataRequest(id= request.id, mensaje = 'Mensaje')
-            #    delate mensaje
 
     def SendMensaje(self, request, context):
 
