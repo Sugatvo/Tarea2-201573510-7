@@ -3,10 +3,11 @@
 1. docker-compose build
 2. docker-compose up -d --scale cliente=2
 3. Esperar a que el docker de rabbitmq se encuentre en estado disponible y se pueda acceder a él.
-4. Abrir 2 terminales más.
-5. docker attach actividad2_servidor_1 
-6. docker attach actividad2_cliente_1
-7. docker attach actividad2_cliente_2
+4. Volver a ejecutar docker-compose up -d --scale cliente=2 para que los container se ejecuten. 
+5. Abrir 2 terminales más.
+6. docker attach actividad2_servidor_1 
+7. docker attach actividad2_cliente_1
+8. docker attach actividad2_cliente_2
 
 # Consideraciones
 Supusimos que el chat no es un chat global entre todos los clientes sino que un chat uno-a-uno entre los clientes. Entonces, para poder enviar mensajes los clientes deben definir un destino correspondiente con el cliente al cual le quieren enviar el mensaje. Es por esto que para poder ejecutar esta especificación y los servicios requeridos, se deben realizar los siguientes comandos:
